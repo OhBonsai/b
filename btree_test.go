@@ -7,6 +7,9 @@ import (
 	"strings"
 	"bytes"
 	"github.com/cznic/strutil"
+	"github.com/cznic/mathutil"
+	"math"
+	"testing"
 )
 
 var caller = func(s string, va ...interface{}) {
@@ -117,4 +120,31 @@ func (t *Tree) dump() string {
 		s = s[:len(s) - 1]
 	}
 	return s
+}
+
+
+func rng() *mathutil.FC32 {
+	x, err := mathutil.NewFC32(math.MinInt32/4, math.MaxInt32/4, false)
+	if err != nil {
+		panic(err)
+	}
+
+	return x
+}
+
+func cmp(a, b interface{}) int {
+	return a.(int) - b.(int)
+}
+
+func TestGet0(t *testing.T) {
+	r := TreeNew(cmp)
+	if g, e := r.Len(), 0; g != e {
+		t.Fatal(g, e)
+	}
+
+	_, ok := r.Get(42)
+	if ok {
+		t.Fatal(ok)
+	}
+
 }

@@ -362,17 +362,17 @@ func (t *Tree) Get(k interface{}) (v interface{}, ok bool) {
 	for {
 		var i int
 		if i,ok = t.find(q, k); ok {
-			switch v := q.(type) {
+			switch vl := q.(type) {
 			case *X:
-				q= v.x[i+1].ch
+				q= vl.x[i+1].ch
 				continue
 			case *DataPage:
-				return v.d[i].v , true
+				return vl.d[i].v , true
 			}
 		}
-		switch v := q.(type) {
+		switch vl := q.(type) {
 		case *X:
-			q = v.x[i].ch
+			q = vl.x[i].ch
 		default:
 			return
 
